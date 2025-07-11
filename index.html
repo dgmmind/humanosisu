@@ -1,639 +1,432 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Humanosisu - Bot de Reclutamiento WhatsApp</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'whatsapp': '#25D366',
-                        'whatsapp-dark': '#128C7E',
-                        'primary': '#6366f1',
-                        'primary-dark': '#4f46e5'
-                    }
-                }
-            }
-        }
-    </script>
+<html lang="es"><head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="🚀">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Conectamos empresas con candidatos certificados, listos para trabajar, y ayudamos a personas a colocarse en 90 días o menos.">
+  <meta name="keywords" content="empleo, reclutamiento, candidatos certificados, búsqueda de trabajo, entrevistas de trabajo, contratación, recursos humanos, 2025">
+  <meta name="theme-color" content="#0f172a">
+  <title>SISU 2025 | Candidatos certificados, listos para trabajar</title>
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="SISU 2025 | Candidatos certificados">
+  <meta property="og:description" content="Conectamos empresas con candidatos certificados, listos para trabajar en 90 días o menos.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" crossorigin="" href="assets/index-CgJwHr4F.css">
 </head>
-<body class="bg-gray-50 min-h-screen">
-<!-- Header -->
-<header class="bg-white shadow-sm border-b">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center py-4">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-gradient-to-r from-primary to-primary-dark rounded-lg flex items-center justify-center">
-                    <span class="text-white font-bold text-lg">H</span>
-                </div>
-                <h1 class="text-2xl font-bold text-gray-900">Humanosisu</h1>
-            </div>
-            <div class="flex items-center space-x-2">
-                <div class="w-6 h-6 bg-whatsapp rounded-full"></div>
-                <span class="text-sm text-gray-600">Bot de Reclutamiento</span>
-            </div>
-        </div>
-    </div>
-</header>
+<body>
+<script type="module">
 
-<!-- Hero Section -->
-<section class="bg-gradient-to-br from-primary via-primary-dark to-purple-600 text-white py-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-5xl font-bold mb-6">Revoluciona tu Proceso de Reclutamiento</h2>
-        <p class="text-xl mb-8 max-w-3xl mx-auto opacity-90">
-            Conecta candidatos y empresas de forma inteligente a través de WhatsApp.
-            Automatiza entrevistas, filtra perfiles y encuentra el talento perfecto.
-        </p>
-        <div class="flex justify-center space-x-4">
-            <button onclick="showTab('candidatos')" class="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
-                Soy Candidato
-            </button>
-            <button onclick="showTab('empresas')" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary transition">
-                Soy Empresa
-            </button>
-        </div>
-    </div>
-</section>
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.42.3/+esm";
 
-<!-- Navigation Tabs -->
-<nav class="bg-white shadow-sm sticky top-0 z-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex space-x-8 overflow-x-auto">
-            <button onclick="showTab('candidatos')" class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap" data-tab="candidatos">
-                Para Candidatos
-            </button>
-            <button onclick="showTab('empresas')" class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap" data-tab="empresas">
-                Para Empresas
-            </button>
-            <button onclick="showTab('caracteristicas')" class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap" data-tab="caracteristicas">
-                Características
-            </button>
-            <button onclick="showTab('porque-elegirnos')" class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap" data-tab="porque-elegirnos">
-                ¿Por qué elegirnos?
-            </button>
-            <button onclick="showTab('tecnologia')" class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap" data-tab="tecnologia">
-                Tecnología
-            </button>
-        </div>
-    </div>
-</nav>
+  console.log('[INIT] 🚀 Iniciando Apple CRM Dashboard OPTIMIZADO');
 
-<!-- Tab Content -->
-<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  const supabase = createClient(
+          'https://zgicsrxvknzudvconhif.supabase.co',
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpnaWNzcnh2a256dWR2Y29uaGlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIyNjE1MDksImV4cCI6MjA2NzgzNzUwOX0.cwGE6MVYELSMiBOaJU4SVwNbKZ3TVAwo1S0ohD_LMnw'
+  );
 
-    <!-- Candidatos Tab -->
-    <div id="candidatos" class="tab-content">
-        <div class="grid lg:grid-cols-2 gap-12 items-start">
-            <div>
-                <h3 class="text-3xl font-bold text-gray-900 mb-6">Encuentra tu Trabajo Ideal</h3>
-                <p class="text-lg text-gray-600 mb-8">
-                    Nuestro bot inteligente te conecta con las mejores oportunidades laborales.
-                    Solo completa tu perfil y deja que la tecnología trabaje para ti.
-                </p>
 
-                <!-- Candidate Form -->
-                <form class="bg-white p-6 rounded-xl shadow-lg border">
-                    <h4 class="text-xl font-semibold mb-4 text-gray-900">Registro de Candidato</h4>
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Nombre Completo</label>
-                            <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Juan Pérez">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Teléfono</label>
-                            <input type="tel" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="+504 9999-9999">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico</label>
-                            <input type="email" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="juan@email.com">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">DNI</label>
-                            <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="0801-1990-12345">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Dirección</label>
-                            <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Colonia, Ciudad">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Idiomas</label>
-                            <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Español, Inglés, Francés">
-                        </div>
-                    </div>
-                    <button type="submit" class="w-full mt-6 bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary-dark transition">
-                        Registrarme como Candidato
-                    </button>
-                </form>
-            </div>
+  // He renombrado la variable a 'supabaseClient' para evitar cualquier confusión futura.
 
-            <!-- WhatsApp Chat Simulation for Candidates -->
-            <div class="bg-gray-100 rounded-xl p-4">
-                <div class="bg-whatsapp text-white p-3 rounded-t-xl flex items-center space-x-3">
-                    <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                        <span class="text-whatsapp font-bold text-sm">H</span>
-                    </div>
-                    <div>
-                        <h5 class="font-semibold">Humanosisu Bot</h5>
-                        <p class="text-xs opacity-90">en línea</p>
-                    </div>
-                </div>
-                <div class="bg-white p-4 h-96 overflow-y-auto space-y-3">
-                    <div class="flex">
-                        <div class="bg-gray-200 rounded-lg p-3 max-w-xs">
-                            <p class="text-sm">¡Hola! 👋 Soy el asistente de Humanosisu. Te ayudo a encontrar trabajo.</p>
-                        </div>
-                    </div>
-                    <div class="flex justify-end">
-                        <div class="bg-primary text-white rounded-lg p-3 max-w-xs">
-                            <p class="text-sm">Hola, busco trabajo en tecnología</p>
-                        </div>
-                    </div>
-                    <div class="flex">
-                        <div class="bg-gray-200 rounded-lg p-3 max-w-xs">
-                            <p class="text-sm">¡Perfecto! 💻 ¿Cuál es tu especialidad? (Frontend, Backend, Full Stack, etc.)</p>
-                        </div>
-                    </div>
-                    <div class="flex justify-end">
-                        <div class="bg-primary text-white rounded-lg p-3 max-w-xs">
-                            <p class="text-sm">Soy desarrollador Full Stack</p>
-                        </div>
-                    </div>
-                    <div class="flex">
-                        <div class="bg-gray-200 rounded-lg p-3 max-w-xs">
-                            <p class="text-sm">Excelente! 🚀 Tengo 3 ofertas que podrían interesarte. ¿Prefieres trabajo remoto o presencial?</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-gray-50 p-3 rounded-b-xl">
-                    <div class="flex items-center space-x-2">
-                        <input type="text" placeholder="Escribe un mensaje..." class="flex-1 px-3 py-2 border border-gray-300 rounded-full text-sm">
-                        <button class="bg-whatsapp text-white p-2 rounded-full">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+  const modal = document.getElementById('miModal');
+  const modalTitle = document.getElementById('modalTitle');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const candidateForm = document.getElementById('candidateForm');
+  const businessForm = document.getElementById('businessForm');
+
+  document.getElementById('openCandidateModalBtn').addEventListener('click', () => {
+    modal.classList.add('active');
+    modalTitle.innerText = 'Formulario Candidatos';
+    candidateForm.classList.remove('hidden');
+    businessForm.classList.add('hidden');
+  });
+
+  document.getElementById('openBusinessModalBtn').addEventListener('click', () => {
+    modal.classList.add('active');
+    modalTitle.innerText = 'Formulario Empresa';
+    businessForm.classList.remove('hidden');
+    candidateForm.classList.add('hidden');
+  });
+
+  closeModalBtn.addEventListener('click', () => {
+    modal.classList.remove('active');
+  });
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.remove('active');
+  });
+
+  candidateForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = {
+      candidate_name: document.getElementById('candidate_name').value,
+      candidate_identity: document.getElementById('candidate_identity').value,
+      phone_number: document.getElementById('phone_number_c').value,
+      candidate_email: document.getElementById('candidate_email').value,
+      candidate_language: document.getElementById('candidate_language').value
+    };
+    // Usamos nuestra variable inicializada 'supabaseClient'
+    const { error } = await supabase.from('candidates').insert([data]);
+    if (error) {
+      alert('Error al enviar: ' + error.message);
+    } else {
+      alert('Formulario de Candidato enviado con éxito');
+      modal.classList.remove('active');
+      candidateForm.reset();
+    }
+  });
+
+  businessForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = {
+      name_company: document.getElementById('name_company').value,
+      rtn_company: document.getElementById('rtn_company').value,
+      company_industry: document.getElementById('company_industry').value,
+      company_owner: document.getElementById('company_owner').value,
+      phone_number: document.getElementById('phone_number_b').value,
+      email_company: document.getElementById('email_company').value
+    };
+    // Usamos nuestra variable inicializada 'supabaseClient'
+    const { error } = await supabase.from('business').insert([data]);
+    if (error) {
+      alert('Error al enviar: ' + error.message);
+    } else {
+      alert('Formulario de Empresa enviado con éxito');
+      modal.classList.remove('active');
+      businessForm.reset();
+    }
+  });
+</script>
+<body>
+<div id="miModal" class="modal-overlay">
+  <div class="modal-container">
+    <button id="closeModalBtn" class="modal-close-btn">×</button>
+    <div class="modal-header">
+      <h2 id="modalTitle">Formulario</h2>
     </div>
 
-    <!-- Empresas Tab -->
-    <div id="empresas" class="tab-content hidden">
-        <div class="grid lg:grid-cols-2 gap-12 items-start">
-            <div>
-                <h3 class="text-3xl font-bold text-gray-900 mb-6">Encuentra el Talento Perfecto</h3>
-                <p class="text-lg text-gray-600 mb-8">
-                    Automatiza tu proceso de reclutamiento y encuentra candidatos calificados
-                    de manera eficiente. Nuestro bot preselecciona por ti.
-                </p>
+    <!-- Candidate Form -->
+    <form id="candidateForm" class="form hidden">
+      <div class="form-group">
+        <input type="text" id="candidate_name" name="candidate_name" required placeholder="Nombre">
+      </div>
+      <div class="form-group">
+        <input type="text" id="candidate_identity" name="candidate_identity" placeholder="Identidad">
+      </div>
+      <div class="form-group">
+        <input type="text" id="phone_number_c" name="phone_number" placeholder="Teléfono">
+      </div>
+      <div class="form-group">
+        <input type="email" id="candidate_email" name="candidate_email" placeholder="Correo">
+      </div>
+      <div class="form-group">
+        <input type="text" id="candidate_language" name="candidate_language" placeholder="Idioma">
+      </div>
+      <button type="submit" class="submit-btn">Enviar</button>
+    </form>
 
-                <!-- Company Form -->
-                <form class="bg-white p-6 rounded-xl shadow-lg border">
-                    <h4 class="text-xl font-semibold mb-4 text-gray-900">Registro de Empresa</h4>
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Nombre de la Empresa</label>
-                            <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Tech Solutions S.A.">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Teléfono</label>
-                            <input type="tel" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="+504 2222-3333">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Correo Corporativo</label>
-                            <input type="email" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="rrhh@empresa.com">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">RTN</label>
-                            <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="08011990123456">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Dirección</label>
-                            <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Edificio, Colonia, Ciudad">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Idiomas Requeridos</label>
-                            <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Español, Inglés">
-                        </div>
-                    </div>
-                    <button type="submit" class="w-full mt-6 bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary-dark transition">
-                        Registrar Empresa
-                    </button>
-                </form>
-            </div>
+    <!-- Business Form -->
+    <form id="businessForm" class="form hidden">
+      <div class="form-group">
+        <input type="text" id="name_company" name="name_company" required placeholder="Nombre Empresa">
+      </div>
+      <div class="form-group">
+        <input type="text" id="rtn_company" name="rtn_company" placeholder="RTN">
+      </div>
+      <div class="form-group">
+        <input type="text" id="company_industry" name="company_industry" placeholder="Industria">
+      </div>
 
-            <!-- WhatsApp Chat Simulation for Companies -->
-            <div class="bg-gray-100 rounded-xl p-4">
-                <div class="bg-whatsapp text-white p-3 rounded-t-xl flex items-center space-x-3">
-                    <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                        <span class="text-whatsapp font-bold text-sm">H</span>
-                    </div>
-                    <div>
-                        <h5 class="font-semibold">Humanosisu Bot</h5>
-                        <p class="text-xs opacity-90">en línea</p>
-                    </div>
-                </div>
-                <div class="bg-white p-4 h-96 overflow-y-auto space-y-3">
-                    <div class="flex">
-                        <div class="bg-gray-200 rounded-lg p-3 max-w-xs">
-                            <p class="text-sm">¡Hola! 👋 Soy el asistente de reclutamiento de Humanosisu. ¿En qué puedo ayudarte?</p>
-                        </div>
-                    </div>
-                    <div class="flex justify-end">
-                        <div class="bg-primary text-white rounded-lg p-3 max-w-xs">
-                            <p class="text-sm">Necesito contratar un desarrollador React</p>
-                        </div>
-                    </div>
-                    <div class="flex">
-                        <div class="bg-gray-200 rounded-lg p-3 max-w-xs">
-                            <p class="text-sm">Perfecto! 💼 ¿Qué nivel de experiencia buscas? (Junior, Semi-Senior, Senior)</p>
-                        </div>
-                    </div>
-                    <div class="flex justify-end">
-                        <div class="bg-primary text-white rounded-lg p-3 max-w-xs">
-                            <p class="text-sm">Semi-Senior, con 3+ años de experiencia</p>
-                        </div>
-                    </div>
-                    <div class="flex">
-                        <div class="bg-gray-200 rounded-lg p-3 max-w-xs">
-                            <p class="text-sm">Excelente! 🎯 Tengo 5 candidatos que cumplen ese perfil. ¿Prefieres modalidad remota, híbrida o presencial?</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-gray-50 p-3 rounded-b-xl">
-                    <div class="flex items-center space-x-2">
-                        <input type="text" placeholder="Escribe un mensaje..." class="flex-1 px-3 py-2 border border-gray-300 rounded-full text-sm">
-                        <button class="bg-whatsapp text-white p-2 rounded-full">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+      <div class="form-group">
+        <input type="text" id="company_owner" name="company_owner" placeholder="Propietario">
+      </div>
+      <div class="form-group">
+        <input type="text" id="phone_number_b" name="phone_number" placeholder="Teléfono">
+      </div>
+      <div class="form-group">
+        <input type="email" id="email_company" name="email_company" placeholder="Correo">
+      </div>
+      <button type="submit" class="submit-btn">Enviar</button>
+    </form>
 
-    <!-- Características Tab -->
-    <div id="caracteristicas" class="tab-content hidden">
-        <div class="text-center mb-12">
-            <h3 class="text-3xl font-bold text-gray-900 mb-4">Características Principales</h3>
-            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-                Nuestro bot de reclutamiento está diseñado para optimizar cada paso del proceso de contratación
-            </p>
-        </div>
+  </div>
+</div>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="bg-white p-6 rounded-xl shadow-lg border hover:shadow-xl transition">
-                <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                    </svg>
-                </div>
-                <h4 class="text-xl font-semibold text-gray-900 mb-3">Chat Inteligente</h4>
-                <p class="text-gray-600">Conversaciones naturales que entienden el contexto y las necesidades específicas de cada usuario.</p>
-            </div>
+<style>
+  /* --- Variables de Color (Basadas en el diseño original) --- */
+  :root {
+    --color-fondo-modal: #161625;
+    --color-texto-principal: #EAEAEA;
+    --color-texto-secundario: #a0a0b0;
+    --color-borde: rgba(255, 255, 255, 0.15);
+    --color-input-bg: rgba(0, 0, 0, 0.25);
+    --color-acento-azul: #6a5af9;
+    --gradiente-azul: linear-gradient(90deg, #4D5BCE, #6a5af9);
+    --color-acento-verde: #08A77E;
+  }
 
-            <div class="bg-white p-6 rounded-xl shadow-lg border hover:shadow-xl transition">
-                <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                </div>
-                <h4 class="text-xl font-semibold text-gray-900 mb-3">Filtrado Automático</h4>
-                <p class="text-gray-600">Preselección inteligente de candidatos basada en criterios específicos y experiencia requerida.</p>
-            </div>
+  /* --- Estilo del Overlay (Fondo oscuro) --- */
+  .modal-overlay {
+    opacity: 0;
+    visibility: hidden;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 20, 0.7);
+    backdrop-filter: blur(5px); /* Efecto de desenfoque opcional */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
 
-            <div class="bg-white p-6 rounded-xl shadow-lg border hover:shadow-xl transition">
-                <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                    </svg>
-                </div>
-                <h4 class="text-xl font-semibold text-gray-900 mb-3">Respuesta Inmediata</h4>
-                <p class="text-gray-600">Disponible 24/7 para responder consultas y procesar aplicaciones sin demoras.</p>
-            </div>
+  .modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
 
-            <div class="bg-white p-6 rounded-xl shadow-lg border hover:shadow-xl transition">
-                <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                    </svg>
-                </div>
-                <h4 class="text-xl font-semibold text-gray-900 mb-3">Análisis de Datos</h4>
-                <p class="text-gray-600">Reportes detallados sobre el proceso de reclutamiento y métricas de rendimiento.</p>
-            </div>
+  /* --- Estilo del Contenedor Principal de la Modal --- */
+  .modal-container {
+    background: var(--color-fondo-modal);
+    color: var(--color-texto-principal);
+    padding: 2.5rem;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 12px;
+    border: 1px solid var(--color-borde);
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+  }
 
-            <div class="bg-white p-6 rounded-xl shadow-lg border hover:shadow-xl transition">
-                <div class="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                    </svg>
-                </div>
-                <h4 class="text-xl font-semibold text-gray-900 mb-3">Seguridad Total</h4>
-                <p class="text-gray-600">Protección completa de datos personales y cumplimiento de normativas de privacidad.</p>
-            </div>
+  .modal-overlay.active .modal-container {
+    transform: scale(1);
+  }
 
-            <div class="bg-white p-6 rounded-xl shadow-lg border hover:shadow-xl transition">
-                <div class="w-12 h-12 bg-yellow-500 rounded-lg flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                    </svg>
-                </div>
-                <h4 class="text-xl font-semibold text-gray-900 mb-3">Matching Inteligente</h4>
-                <p class="text-gray-600">Algoritmos avanzados que conectan el talento perfecto con las oportunidades ideales.</p>
-            </div>
-        </div>
-    </div>
+  /* --- Botón de Cierre (X) --- */
+  .modal-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--color-texto-secundario);
+    font-size: 28px;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
 
-    <!-- Por qué elegirnos Tab -->
-    <div id="porque-elegirnos" class="tab-content hidden">
-        <div class="text-center mb-12">
-            <h3 class="text-3xl font-bold text-gray-900 mb-4">¿Por qué elegir Humanosisu?</h3>
-            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-                Somos líderes en innovación de reclutamiento con resultados comprobados
-            </p>
-        </div>
+  .modal-close-btn:hover {
+    color: #FFFFFF;
+    transform: rotate(90deg);
+  }
 
-        <div class="grid lg:grid-cols-2 gap-12 items-center mb-16">
-            <div>
-                <div class="space-y-8">
-                    <div class="flex items-start space-x-4">
-                        <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                            <span class="text-white font-bold text-sm">1</span>
-                        </div>
-                        <div>
-                            <h4 class="text-xl font-semibold text-gray-900 mb-2">Eficiencia Comprobada</h4>
-                            <p class="text-gray-600">Reducimos el tiempo de contratación en un 70% comparado con métodos tradicionales.</p>
-                        </div>
-                    </div>
+  /* --- Cabecera de la Modal --- */
+  .modal-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
 
-                    <div class="flex items-start space-x-4">
-                        <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                            <span class="text-white font-bold text-sm">2</span>
-                        </div>
-                        <div>
-                            <h4 class="text-xl font-semibold text-gray-900 mb-2">Precisión en el Matching</h4>
-                            <p class="text-gray-600">95% de satisfacción en las contrataciones realizadas a través de nuestra plataforma.</p>
-                        </div>
-                    </div>
+  .modal-header h2 {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
 
-                    <div class="flex items-start space-x-4">
-                        <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                            <span class="text-white font-bold text-sm">3</span>
-                        </div>
-                        <div>
-                            <h4 class="text-xl font-semibold text-gray-900 mb-2">Soporte Especializado</h4>
-                            <p class="text-gray-600">Equipo de expertos en RRHH disponible para optimizar tu proceso de reclutamiento.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  /* --- Estilos Generales del Formulario --- */
+  .form.hidden {
+    display: none;
+  }
 
-            <div class="bg-gradient-to-br from-primary to-primary-dark rounded-2xl p-8 text-white">
-                <h4 class="text-2xl font-bold mb-6">Estadísticas que Hablan</h4>
-                <div class="grid grid-cols-2 gap-6">
-                    <div class="text-center">
-                        <div class="text-3xl font-bold mb-2">500+</div>
-                        <div class="text-sm opacity-90">Empresas Registradas</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-3xl font-bold mb-2">10K+</div>
-                        <div class="text-sm opacity-90">Candidatos Activos</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-3xl font-bold mb-2">95%</div>
-                        <div class="text-sm opacity-90">Tasa de Éxito</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-3xl font-bold mb-2">24/7</div>
-                        <div class="text-sm opacity-90">Disponibilidad</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
 
-        <!-- Testimonials -->
-        <div class="bg-gray-50 rounded-2xl p-8">
-            <h4 class="text-2xl font-bold text-center text-gray-900 mb-8">Lo que dicen nuestros clientes</h4>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="bg-white p-6 rounded-xl shadow-sm">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-                            <span class="text-white font-bold">M</span>
-                        </div>
-                        <div class="ml-4">
-                            <h5 class="font-semibold text-gray-900">María González</h5>
-                            <p class="text-sm text-gray-600">HR Manager - TechCorp</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 italic">"Humanosisu revolucionó nuestro proceso de reclutamiento. Encontramos candidatos perfectos en la mitad del tiempo."</p>
-                </div>
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-texto-secundario);
+  }
 
-                <div class="bg-white p-6 rounded-xl shadow-sm">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-                            <span class="text-white font-bold">C</span>
-                        </div>
-                        <div class="ml-4">
-                            <h5 class="font-semibold text-gray-900">Carlos Mendoza</h5>
-                            <p class="text-sm text-gray-600">Desarrollador Full Stack</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 italic">"Gracias al bot encontré mi trabajo ideal en solo una semana. El proceso fue súper fácil y eficiente."</p>
-                </div>
-            </div>
-        </div>
-    </div>
+  .form-group input {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    box-sizing: border-box;
+    background-color: var(--color-input-bg);
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    color: var(--color-texto-principal);
+    font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
 
-    <!-- Tecnología Tab -->
-    <div id="tecnologia" class="tab-content hidden">
-        <div class="text-center mb-12">
-            <h3 class="text-3xl font-bold text-gray-900 mb-4">Tecnología de Vanguardia</h3>
-            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-                Utilizamos las últimas tecnologías en IA y automatización para ofrecer la mejor experiencia
-            </p>
-        </div>
+  .form-group input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+  }
 
-        <div class="grid lg:grid-cols-3 gap-8 mb-16">
-            <div class="bg-white p-8 rounded-xl shadow-lg border text-center hover:shadow-xl transition">
-                <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-                    </svg>
-                </div>
-                <h4 class="text-xl font-semibold text-gray-900 mb-4">Inteligencia Artificial</h4>
-                <p class="text-gray-600">Algoritmos de machine learning que aprenden y mejoran continuamente el proceso de matching.</p>
-            </div>
+  /* Efecto de foco para los inputs */
+  .form-group input:focus {
+    outline: none;
+    border-color: var(--color-acento-azul);
+    box-shadow: 0 0 0 3px rgba(106, 90, 249, 0.4);
+  }
 
-            <div class="bg-white p-8 rounded-xl shadow-lg border text-center hover:shadow-xl transition">
-                <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                    </svg>
-                </div>
-                <h4 class="text-xl font-semibold text-gray-900 mb-4">Procesamiento Natural</h4>
-                <p class="text-gray-600">NLP avanzado para entender y procesar conversaciones de manera natural y contextual.</p>
-            </div>
+  /* --- Botón de Envío --- */
+  .submit-btn {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    color: #FFFFFF;
+    cursor: pointer;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
 
-            <div class="bg-white p-8 rounded-xl shadow-lg border text-center hover:shadow-xl transition">
-                <div class="w-16 h-16 bg-gradient-to-r from-red-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                    </svg>
-                </div>
-                <h4 class="text-xl font-semibold text-gray-900 mb-4">Cloud Computing</h4>
-                <p class="text-gray-600">Infraestructura escalable en la nube que garantiza disponibilidad y rendimiento óptimo.</p>
-            </div>
-        </div>
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
 
-        <!-- Tech Stack -->
-        <div class="bg-gray-50 rounded-2xl p-8">
-            <h4 class="text-2xl font-bold text-center text-gray-900 mb-8">Nuestro Stack Tecnológico</h4>
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-white p-4 rounded-lg shadow-sm text-center">
-                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                        <span class="text-blue-600 font-bold text-lg">AI</span>
-                    </div>
-                    <h5 class="font-semibold text-gray-900 mb-2">OpenAI GPT</h5>
-                    <p class="text-sm text-gray-600">Conversaciones inteligentes</p>
-                </div>
+  .submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
 
-                <div class="bg-white p-4 rounded-lg shadow-sm text-center">
-                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                        <span class="text-green-600 font-bold text-lg">WA</span>
-                    </div>
-                    <h5 class="font-semibold text-gray-900 mb-2">WhatsApp API</h5>
-                    <p class="text-sm text-gray-600">Integración nativa</p>
-                </div>
+  /* Colores específicos para cada botón de formulario */
+  .candidate-btn {
+    background-color: var(--color-acento-verde);
+  }
 
-                <div class="bg-white p-4 rounded-lg shadow-sm text-center">
-                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                        <span class="text-purple-600 font-bold text-lg">DB</span>
-                    </div>
-                    <h5 class="font-semibold text-gray-900 mb-2">MongoDB</h5>
-                    <p class="text-sm text-gray-600">Base de datos NoSQL</p>
-                </div>
+  .business-btn {
+    background: var(--gradiente-azul);
+  }
 
-                <div class="bg-white p-4 rounded-lg shadow-sm text-center">
-                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                        <span class="text-orange-600 font-bold text-lg">AWS</span>
-                    </div>
-                    <h5 class="font-semibold text-gray-900 mb-2">Amazon Web Services</h5>
-                    <p class="text-sm text-gray-600">Infraestructura cloud</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>
-
-<!-- Footer -->
-<footer class="bg-gray-900 text-white py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-4 gap-8">
-            <div>
-                <div class="flex items-center space-x-3 mb-4">
-                    <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                        <span class="text-white font-bold">H</span>
-                    </div>
-                    <span class="text-xl font-bold">Humanosisu</span>
-                </div>
-                <p class="text-gray-400">Revolucionando el reclutamiento con tecnología de vanguardia.</p>
-            </div>
-
-            <div>
-                <h5 class="font-semibold mb-4">Servicios</h5>
-                <ul class="space-y-2 text-gray-400">
-                    <li><a href="#" class="hover:text-white transition">Para Candidatos</a></li>
-                    <li><a href="#" class="hover:text-white transition">Para Empresas</a></li>
-                    <li><a href="#" class="hover:text-white transition">Bot de WhatsApp</a></li>
-                </ul>
-            </div>
-
-            <div>
-                <h5 class="font-semibold mb-4">Empresa</h5>
-                <ul class="space-y-2 text-gray-400">
-                    <li><a href="#" class="hover:text-white transition">Sobre Nosotros</a></li>
-                    <li><a href="#" class="hover:text-white transition">Contacto</a></li>
-                    <li><a href="#" class="hover:text-white transition">Privacidad</a></li>
-                </ul>
-            </div>
-
-            <div>
-                <h5 class="font-semibold mb-4">Contacto</h5>
-                <div class="space-y-2 text-gray-400">
-                    <p>📧 info@humanosisu.com</p>
-                    <p>📱 +504 9999-0000</p>
-                    <p>📍 Tegucigalpa, Honduras</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 Humanosisu. Todos los derechos reservados.</p>
-        </div>
-    </div>
-</footer>
-
-<script>
-    // Tab functionality
-    function showTab(tabName) {
-        // Hide all tab contents
-        const tabContents = document.querySelectorAll('.tab-content');
-        tabContents.forEach(content => {
-            content.classList.add('hidden');
-        });
-
-        // Remove active class from all tab buttons
-        const tabButtons = document.querySelectorAll('.tab-btn');
-        tabButtons.forEach(btn => {
-            btn.classList.remove('border-primary', 'text-primary');
-            btn.classList.add('border-transparent', 'text-gray-500');
-        });
-
-        // Show selected tab content
-        const selectedTab = document.getElementById(tabName);
-        if (selectedTab) {
-            selectedTab.classList.remove('hidden');
-        }
-
-        // Add active class to selected tab button
-        const selectedButton = document.querySelector(`[data-tab="${tabName}"]`);
-        if (selectedButton) {
-            selectedButton.classList.remove('border-transparent', 'text-gray-500');
-            selectedButton.classList.add('border-primary', 'text-primary');
-        }
+  /* --- Responsividad --- */
+  @media (max-width: 500px) {
+    .modal-container {
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
-    // Show first tab by default
-    document.addEventListener('DOMContentLoaded', function() {
-        showTab('candidatos');
-    });
+    .modal-header h2 {
+      font-size: 1.5rem;
+    }
+  }
+</style>
 
-    // Form submissions
-    document.querySelectorAll('form').forEach(form => {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('¡Registro exitoso! Nos pondremos en contacto contigo pronto.');
-        });
-    });
+<div id="root"><div class="min-h-screen flex flex-col bg-[#0a0c13]"><section id="hero" class="relative overflow-hidden"><nav class="absolute top-0 left-0 right-0 z-20 py-4"><div class="container mx-auto px-4"><div class="glassmorphism rounded-2xl px-6 py-4 flex justify-between items-center"><div class="flex items-center"><span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 font-bold text-2xl">SISU</span></div><div class="flex items-center space-x-6"><a href="#empresas" class="text-gray-300 hover:text-white transition-colors duration-200 font-medium">Empresas</a><a href="#candidatos" class="text-gray-300 hover:text-white transition-colors duration-200 font-medium">Candidatos</a></div></div></div></nav><div class="container mx-auto px-4 py-28 md:py-36 flex flex-col items-center relative z-10"><div class="max-w-4xl mx-auto text-center space-y-8"><div class="inline-block mb-2 px-4 py-2 rounded-full blue-purple-gradient"><span class="text-white font-medium">SISU 2025</span></div><h1 class="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-200">👉 ¿Buscás trabajo o necesitás empleados confiables?</h1><p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">Conectamos empresas con candidatos certificados, listos para trabajar, y ayudamos a personas a colocarse en 90 días o menos.</p><div class="flex flex-col md:flex-row gap-4 justify-center mt-10"><button id="openBusinessModalBtn" class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md blue-purple-gradient border-none h-14 px-6 text-base md:text-lg shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 transition-all"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-building mr-2 h-5 w-5" aria-hidden="true"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01"></path><path d="M16 6h.01"></path><path d="M12 6h.01"></path><path d="M12 10h.01"></path><path d="M12 14h.01"></path><path d="M16 10h.01"></path><path d="M16 14h.01"></path><path d="M8 10h.01"></path><path d="M8 14h.01"></path></svg>Soy Empresa — Quiero Candidatos Certificados</button><button id="openCandidateModalBtn" class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary hover:bg-primary/90 rounded-md green-teal-gradient border-none h-14 px-6 text-base md:text-lg text-white shadow-lg shadow-green-500/20 hover:shadow-green-500/30 transition-all"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user mr-2 h-5 w-5" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Soy Candidato — Quiero Colocarme en 90 Días</button></div></div><div class="absolute -bottom-20 -right-20 w-64 h-64 bg-blue-500 rounded-full opacity-10 blur-3xl"></div><div class="absolute -top-20 -left-20 w-80 h-80 bg-purple-500 rounded-full opacity-10 blur-3xl"></div></div><div class="absolute inset-0 modern-gradient-bg -z-20"></div><div class="absolute inset-0 grid-pattern -z-10"></div><div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-green-500"></div></section><section id="empresas" class="py-24 relative"><div class="container mx-auto px-4 relative z-10"><div class="max-w-4xl mx-auto"><div class="inline-block mb-6 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20"><span class="text-blue-400 font-medium">Para Empresas</span></div><h2 class="text-3xl md:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-300"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check text-blue-400 inline mr-2 h-8 w-8" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Construí tu propio banco de candidatos certificados, sin costo inicial.</h2><div class="text-gray-300 space-y-4 mb-10 text-lg"><p>Publicá tus vacantes sin costo, atraemos y evaluamos candidatos por vos.</p><p>Filtramos por ética, habilidades, ubicación y compatibilidad real.</p><p>Cuando necesités contratar, solo pedís los perfiles listos para entrevista.</p></div><div class="mt-16 mb-16"><h3 class="text-2xl font-semibold mb-8 text-white">¿Cómo funciona?</h3><div class="grid md:grid-cols-2 gap-6"><div class="modern-card p-8 hover:border-blue-500/30 transition-all duration-300"><div class="text-blue-400 mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star h-6 w-6" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg></div><div class="font-medium text-gray-100 mb-2 text-lg">1. Publicás tu vacante (gratis).</div><div class="font-medium text-gray-100 mb-2 text-lg">2. Atraemos candidatos y los pre-certificamos.</div></div><div class="modern-card p-8 hover:border-blue-500/30 transition-all duration-300"><div class="text-blue-400 mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check h-6 w-6" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg></div><div class="font-medium text-gray-100 mb-2 text-lg">3. Te notificamos cuando tu banco esté listo.</div><div class="font-medium text-gray-100 mb-2 text-lg">4. Cuando necesités contratar, solicitás acceso.</div></div></div></div><div class="mt-16 mb-16"><h3 class="text-2xl font-semibold mb-8 text-white">Beneficios</h3><div class="grid md:grid-cols-2 gap-6"><div class="modern-card p-8 hover:border-blue-500/30 transition-all duration-300"><div class="text-blue-400 mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock h-6 w-6" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div><div class="font-medium text-gray-100 mb-2 text-lg">Sin compromisos ni costos iniciales.</div><div class="font-medium text-gray-100 mb-2 text-lg">Solo entrevistás personas compatibles.</div></div><div class="modern-card p-8 hover:border-blue-500/30 transition-all duration-300"><div class="text-blue-400 mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap h-6 w-6" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg></div><div class="font-medium text-gray-100 mb-2 text-lg">Diagnóstico real sobre la viabilidad de tu oferta.</div><div class="font-medium text-gray-100 mb-2 text-lg">Cero pérdida de tiempo.</div></div></div></div><div class="mt-14 text-center"><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md blue-purple-gradient border-none h-14 px-8 text-base md:text-lg shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 transition-all"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-building mr-2 h-5 w-5" aria-hidden="true"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01"></path><path d="M16 6h.01"></path><path d="M12 6h.01"></path><path d="M12 10h.01"></path><path d="M12 14h.01"></path><path d="M16 10h.01"></path><path d="M16 14h.01"></path><path d="M8 10h.01"></path><path d="M8 14h.01"></path></svg>Quiero publicar mi vacante ahora (sin costo)</button></div></div></div><div class="absolute top-1/4 right-0 w-96 h-96 bg-blue-500 rounded-full opacity-5 blur-3xl"></div><div class="absolute bottom-1/4 left-0 w-80 h-80 bg-indigo-700 rounded-full opacity-5 blur-3xl"></div></section><section id="candidatos" class="py-24 relative"><div class="container mx-auto px-4 relative z-10"><div class="max-w-4xl mx-auto"><div class="inline-block mb-6 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20"><span class="text-green-400 font-medium">Para Candidatos</span></div><h2 class="text-3xl md:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-teal-300"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rocket text-green-400 inline mr-2 h-8 w-8" aria-hidden="true"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>Pasá de desempleado a contratado en 90 días (o menos).</h2><div class="text-gray-300 space-y-4 mb-10 text-lg"><p>¿Mandás CVs y nadie responde? No es casualidad.</p><p>Te decimos la verdad sobre tu perfil y te ayudamos a mejorarlo hasta que estés listo para colocarte.</p></div><div class="mt-16 mb-16"><h3 class="text-2xl font-semibold mb-8 text-white">¿Qué incluye el servicio?</h3><div class="grid md:grid-cols-2 gap-6"><div class="modern-card p-8 hover:border-green-500/30 transition-all duration-300"><div class="text-green-400 mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-target h-6 w-6" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg></div><div class="font-medium text-gray-100 mb-2 text-lg">Diagnóstico claro de tu hoja de vida, habilidades y actitud.</div><div class="font-medium text-gray-100 mb-2 text-lg">Plan personalizado para que mejores lo necesario.</div></div><div class="modern-card p-8 hover:border-green-500/30 transition-all duration-300"><div class="text-green-400 mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-pie h-6 w-6" aria-hidden="true"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"></path><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path></svg></div><div class="font-medium text-gray-100 mb-2 text-lg">Entrenamiento express para entrevistas y presentación.</div><div class="font-medium text-gray-100 mb-2 text-lg">Acceso a vacantes activas cuando estés listo.</div></div></div></div><div class="mt-16 mb-16"><h3 class="text-2xl font-semibold mb-8 text-white">Beneficios</h3><div class="grid md:grid-cols-2 gap-6"><div class="modern-card p-8 hover:border-green-500/30 transition-all duration-300"><div class="text-green-400 mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open h-6 w-6" aria-hidden="true"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg></div><div class="font-medium text-gray-100 mb-2 text-lg">Retroalimentación honesta (sin rodeos).</div><div class="font-medium text-gray-100 mb-2 text-lg">Cero promesas vacías: te decimos exactamente qué cambiar.</div></div><div class="modern-card p-8 hover:border-green-500/30 transition-all duration-300"><div class="text-green-400 mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles h-6 w-6" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path><path d="M20 3v4"></path><path d="M22 5h-4"></path><path d="M4 17v2"></path><path d="M5 18H3"></path></svg></div><div class="font-medium text-gray-100 mb-2 text-lg">Proceso paso a paso, acompañado.</div><div class="font-medium text-gray-100 mb-2 text-lg">Todo inicia con una entrevista automática, gratis.</div></div></div></div><div class="mt-14 text-center"><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md green-teal-gradient border-none h-14 px-8 text-base md:text-lg shadow-lg shadow-green-500/20 hover:shadow-green-500/30 transition-all"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user mr-2 h-5 w-5" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Quiero iniciar mi diagnóstico ahora (gratis)</button></div></div></div><div class="absolute top-1/4 left-0 w-96 h-96 bg-green-500 rounded-full opacity-5 blur-3xl"></div><div class="absolute bottom-1/4 right-0 w-80 h-80 bg-teal-700 rounded-full opacity-5 blur-3xl"></div></section><section class="py-32 relative overflow-hidden"><div class="container mx-auto px-4 relative z-10"><div class="max-w-4xl mx-auto text-center"><div class="inline-block mb-6 px-4 py-2 rounded-full glassmorphism"><span class="text-gray-200 font-medium">La verdad importa</span></div><h2 class="text-3xl md:text-4xl font-bold mb-10 bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-200 to-green-200"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-check text-white inline mr-2 h-8 w-8" aria-hidden="true"><path d="M18 6 7 17l-5-5"></path><path d="m22 10-7.5 7.5L13 16"></path></svg>La verdad te hace libre (y empleable o empleador exitoso).</h2><div class="mb-16 space-y-4 text-lg"><p class="text-gray-300">En SISU no vendemos humo ni promesas vacías.</p><p class="text-gray-300">Solo trabajamos con empresas que quieren candidatos éticos y preparados,</p><p class="text-gray-300">y con personas dispuestas a mejorar para conseguir un empleo digno.</p></div><div class="flex flex-col md:flex-row gap-6 justify-center mt-16"><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md blue-purple-gradient border-none h-14 px-8 text-base md:text-lg shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 transition-all"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-building mr-2 h-5 w-5" aria-hidden="true"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01"></path><path d="M16 6h.01"></path><path d="M12 6h.01"></path><path d="M12 10h.01"></path><path d="M12 14h.01"></path><path d="M16 10h.01"></path><path d="M16 14h.01"></path><path d="M8 10h.01"></path><path d="M8 14h.01"></path></svg>Publicar vacante sin costo</button><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md green-teal-gradient border-none h-14 px-8 text-base md:text-lg shadow-lg shadow-green-500/20 hover:shadow-green-500/30 transition-all"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user mr-2 h-5 w-5" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Iniciar diagnóstico como candidato</button></div><footer class="mt-24 text-sm text-gray-400"><p>© 2025 SISU. Todos los derechos reservados.</p></footer></div></div><div class="absolute inset-0 modern-gradient-bg -z-20"></div><div class="absolute inset-0 grid-pattern -z-10"></div><div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-green-500"></div><div class="absolute top-1/3 left-1/4 w-96 h-96 bg-blue-500 rounded-full opacity-10 blur-3xl"></div><div class="absolute bottom-1/3 right-1/4 w-96 h-96 bg-purple-500 rounded-full opacity-10 blur-3xl"></div></section></div><div role="region" aria-label="Notifications (F8)" tabindex="-1" style="pointer-events: none;"><ol tabindex="-1" class="fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]"></ol></div></div>
+<!-- IMPORTANT: Never remove the following script reference, otherwise advanced features like element editing will not work -->
+<script src="https://static.devv.ai/devv-app.js" type="module"></script>
 
-    // Smooth scrolling for navigation
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
+<style>
+  #devv-badge-container {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 1000000;
+  }
+
+  #devv-badge {
+    background-color: #000;
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease, width 0.3s ease;
+    position: relative;
+  }
+
+  #devv-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  #devv-badge svg.logo {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+  }
+
+  #devv-badge-close {
+    color: rgba(255, 255, 255, 0.8);
+    background-color: transparent;
+    border: none;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    font-weight: normal;
+    font-size: 14px;
+    cursor: pointer;
+    line-height: 1;
+    padding-bottom: 2px;
+    margin-left: 4px;
+    transition: color 0.2s ease;
+  }
+
+  #devv-badge:hover #devv-badge-close {
+    display: inline-flex;
+  }
+
+  #devv-badge-close:hover {
+    color: rgba(255, 255, 255, 1);
+  }
+
+  @media (max-width: 768px) {
+    #devv-badge-container {
+      bottom: 10px;
+      right: 10px;
+    }
+
+    #devv-badge {
+      padding: 5px 10px;
+      font-size: 10px;
+    }
+
+    #devv-badge-close {
+      display: none !important;
+    }
+  }
+</style>
+
+
+<script>
+  (function() {
+    if (window.self !== window.top) {
+      const badgeContainer = document.getElementById('devv-badge-container');
+      if (badgeContainer) badgeContainer.style.display = 'none';
+    }
+
+    if (navigator.userAgent.includes('puppeteer') || navigator.userAgent.includes('headless')) {
+      const badgeContainer = document.getElementById('devv-badge-container');
+      if (badgeContainer) badgeContainer.style.display = 'none';
+    }
+
+    const closeButton = document.getElementById('devv-badge-close');
+    if (closeButton) {
+      closeButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        const badgeContainer = document.getElementById('devv-badge-container');
+        if (badgeContainer) badgeContainer.style.display = 'none';
+      });
+    }
+  })();
 </script>
-</body>
-</html>
+
+
+</body></html>
