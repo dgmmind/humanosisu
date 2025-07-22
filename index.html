@@ -59,29 +59,6 @@
       });
     });
 
-    // Abrir modal candidatos
-    document.getElementById('openCandidateModalBtn').addEventListener('click', () => {
-  
-    });
-
-    function openCandidates(){
-          modal.classList.add('active');
-      modalTitle.innerText = 'Formulario Candidatos';
-      candidateForm.classList.remove('hidden');
-      businessForm.classList.add('hidden');
-    }
-
-    // Abrir modal empresas
-    document.getElementById('openBusinessModalBtn').addEventListener('click', () => {
-     
-    });
-
-     function openCandidates(){
-      modal.classList.add('active');
-      modalTitle.innerText = 'Formulario Empresa';
-      businessForm.classList.remove('hidden');
-      candidateForm.classList.add('hidden');
-    }
 
     // Cerrar modal
     closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
@@ -532,6 +509,30 @@
 
 
 <script>
+      // Abrir modal candidatos
+    document.getElementById('openCandidateModalBtn').addEventListener('click', () => {
+  
+    });
+
+    function openCandidates(){
+          modal.classList.add('active');
+      modalTitle.innerText = 'Formulario Candidatos';
+      candidateForm.classList.remove('hidden');
+      businessForm.classList.add('hidden');
+    }
+
+    // Abrir modal empresas
+    document.getElementById('openBusinessModalBtn').addEventListener('click', () => {
+     
+    });
+
+     function openCandidates(){
+      modal.classList.add('active');
+      modalTitle.innerText = 'Formulario Empresa';
+      businessForm.classList.remove('hidden');
+      candidateForm.classList.add('hidden');
+    }
+
   (function() {
     if (window.self !== window.top) {
       const badgeContainer = document.getElementById('devv-badge-container');
