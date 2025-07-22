@@ -14,196 +14,7 @@
   <link rel="stylesheet" href="assets/notifications.css">
 </head>
 <body>
-<script type="module">
-  document.addEventListener('DOMContentLoaded', async () => {
-    const { createClient } = await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.42.3/+esm");
 
-    const supabase = createClient(
-            'https://zgicsrxvknzudvconhif.supabase.co',
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpnaWNzcnh2a256dWR2Y29uaGlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIyNjE1MDksImV4cCI6MjA2NzgzNzUwOX0.cwGE6MVYELSMiBOaJU4SVwNbKZ3TVAwo1S0ohD_LMnw'
-    );
-
-    const modal = document.getElementById('miModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    const candidateForm = document.getElementById('candidateForm');
-    const businessForm = document.getElementById('businessForm');
-
-    // Limitar y validar solo números en ciertos inputs con longitud fija
-    const camposNumericos = [
-      { id: 'candidate_identity', max: 13 },
-      { id: 'phone_number_c', max: 8 },
-      { id: 'phone_number_b', max: 8 }
-    ];
-
-    camposNumericos.forEach(({id, max}) => {
-      const input = document.getElementById(id);
-      input.addEventListener('input', () => {
-        input.value = input.value.replace(/\D/g, '').slice(0, max);
-      });
-    });
-
-    // Validar formato de correo
-    const esCorreoValido = (correo) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo);
-
-    // Advertencia al recargar o salir de la página
-    window.addEventListener('beforeunload', (e) => {
-      e.preventDefault();
-      e.returnValue = '';
-      showNotify({
-        type: 'info',
-        titulo: '¡Atención!',
-        descripcion: 'Si recargas la página se perderán los datos ingresados.',
-        tiempo: 5000,
-        icono: '⚠️'
-      });
-    });
-
-
-    // Cerrar modal
-    closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) modal.classList.remove('active');
-    });
-
-    // Envío y validación formulario candidatos
-    candidateForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const data = {
-        candidate_name: document.getElementById('candidate_name').value.trim(),
-        candidate_identity: document.getElementById('candidate_identity').value.trim(),
-        phone_number: document.getElementById('phone_number_c').value.trim(),
-        candidate_email: document.getElementById('candidate_email').value.trim(),
-        candidate_language: 'Español' // Valor por defecto
-      };
-
-      if (Object.values(data).some(v => !v)) {
-        return showNotify({ type: 'danger', titulo: 'Campos requeridos', descripcion: 'Todos los campos son obligatorios.', tiempo: 4000, icono: '❌' });
-      }
-
-      if (!/^\d{13}$/.test(data.candidate_identity)) {
-        return showNotify({ type: 'danger', titulo: 'Identidad inválida', descripcion: 'Debe tener exactamente 13 dígitos numéricos.', tiempo: 4000, icono: '🪪' });
-      }
-
-      if (!/^\d{8}$/.test(data.phone_number)) {
-        return showNotify({ type: 'danger', titulo: 'Teléfono inválido', descripcion: 'Debe tener exactamente 8 dígitos numéricos.', tiempo: 4000, icono: '📞' });
-      }
-
-      if (!esCorreoValido(data.candidate_email)) {
-        return showNotify({ type: 'danger', titulo: 'Correo inválido', descripcion: 'Formato de correo incorrecto.', tiempo: 4000, icono: '📧' });
-      }
-
-      // Verificar duplicados
-      const { data: existing, error: errorCheck } = await supabase
-              .from('candidates')
-              .select('candidate_id, candidate_email, phone_number, candidate_identity')
-              .or(`candidate_identity.eq.${data.candidate_identity},candidate_email.eq.${data.candidate_email},phone_number.eq.${data.phone_number}`);
-
-      if (errorCheck) {
-        return showNotify({ type: 'danger', titulo: 'Error de permisos', descripcion: 'No se pudo validar duplicados. Contacta al administrador.', tiempo: 5000, icono: '🔒' });
-      }
-
-      if (existing && existing.length > 0) {
-        let camposDuplicados = [];
-
-        existing.forEach(item => {
-          if (item.candidate_identity === data.candidate_identity) camposDuplicados.push('identidad');
-          if (item.candidate_email === data.candidate_email) camposDuplicados.push('correo');
-          if (item.phone_number === data.phone_number) camposDuplicados.push('teléfono');
-        });
-
-        camposDuplicados = [...new Set(camposDuplicados)];
-
-        return showNotify({
-          type: 'danger',
-          titulo: 'Duplicado',
-          descripcion: `Ya existe un candidato con el/los siguiente(s) dato(s): ${camposDuplicados.join(', ')}.`,
-          tiempo: 6000,
-          icono: '🚫'
-        });
-      }
-
-      const { error } = await supabase.from('candidates').insert([data]);
-
-      if (error) {
-        showNotify({ type: 'danger', titulo: 'Error', descripcion: error.message, tiempo: 4000, icono: '❌' });
-      } else {
-        showNotify({ type: 'success', titulo: 'Éxito', descripcion: 'Candidato registrado correctamente.', tiempo: 4000, icono: '✅' });
-        modal.classList.remove('active');
-        candidateForm.reset();
-      }
-    });
-
-    // Envío y validación formulario empresas
-    businessForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const data = {
-        name_company: document.getElementById('name_company').value.trim(),
-        rtn_company: '00000000000000', // Valor por defecto
-        company_industry: document.getElementById('company_industry').value.trim(),
-        company_owner: document.getElementById('company_owner').value.trim(),
-        phone_number: document.getElementById('phone_number_b').value.trim(),
-        email_company: document.getElementById('email_company').value.trim()
-      };
-
-      if (Object.values(data).some(v => !v)) {
-        return showNotify({ type: 'danger', titulo: 'Campos requeridos', descripcion: 'Todos los campos son obligatorios.', tiempo: 4000, icono: '❌' });
-      }
-
-
-
-      if (!/^\d{8}$/.test(data.phone_number)) {
-        return showNotify({ type: 'danger', titulo: 'Teléfono inválido', descripcion: 'Debe tener exactamente 8 dígitos numéricos.', tiempo: 4000, icono: '📞' });
-      }
-
-      if (!esCorreoValido(data.email_company)) {
-        return showNotify({ type: 'danger', titulo: 'Correo inválido', descripcion: 'Formato de correo incorrecto.', tiempo: 4000, icono: '📧' });
-      }
-
-      // Verificar duplicados
-      const { data: existing, error: errorCheck } = await supabase
-              .from('business')
-              .select('company_id, email_company, phone_number')
-              .or(`email_company.eq.${data.email_company},phone_number.eq.${data.phone_number}`);
-
-      if (errorCheck) {
-        return showNotify({ type: 'danger', titulo: 'Error de permisos', descripcion: 'No se pudo validar duplicados. Contacta al administrador.', tiempo: 5000, icono: '🔒' });
-      }
-
-      if (existing && existing.length > 0) {
-        let camposDuplicados = [];
-
-        existing.forEach(item => {
-          if (item.email_company === data.email_company) camposDuplicados.push('correo');
-          if (item.phone_number === data.phone_number) camposDuplicados.push('teléfono');
-        });
-
-        camposDuplicados = [...new Set(camposDuplicados)];
-
-        return showNotify({
-          type: 'danger',
-          titulo: 'Duplicado',
-          descripcion: `Ya existe una empresa con el/los siguiente(s) dato(s): ${camposDuplicados.join(', ')}.`,
-          tiempo: 6000,
-          icono: '🚫'
-        });
-      }
-
-      const { error } = await supabase.from('business').insert([data]);
-
-      if (error) {
-        showNotify({ type: 'danger', titulo: 'Error', descripcion: error.message, tiempo: 4000, icono: '❌' });
-      } else {
-        showNotify({ type: 'success', titulo: 'Éxito', descripcion: 'Empresa registrada correctamente.', tiempo: 4000, icono: '✅' });
-        modal.classList.remove('active');
-        businessForm.reset();
-      }
-    });
-
-  });
-</script>
 
 
 
@@ -506,10 +317,51 @@
     }
   }
 </style>
+<script type="module">
+  document.addEventListener('DOMContentLoaded', async () => {
+    const { createClient } = await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.42.3/+esm");
 
+    const supabase = createClient(
+            'https://zgicsrxvknzudvconhif.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpnaWNzcnh2a256dWR2Y29uaGlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIyNjE1MDksImV4cCI6MjA2NzgzNzUwOX0.cwGE6MVYELSMiBOaJU4SVwNbKZ3TVAwo1S0ohD_LMnw'
+    );
 
-<script>
-      // Abrir modal candidatos
+    const modal = document.getElementById('miModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const candidateForm = document.getElementById('candidateForm');
+    const businessForm = document.getElementById('businessForm');
+
+    // Limitar y validar solo números en ciertos inputs con longitud fija
+    const camposNumericos = [
+      { id: 'candidate_identity', max: 13 },
+      { id: 'phone_number_c', max: 8 },
+      { id: 'phone_number_b', max: 8 }
+    ];
+
+    camposNumericos.forEach(({id, max}) => {
+      const input = document.getElementById(id);
+      input.addEventListener('input', () => {
+        input.value = input.value.replace(/\D/g, '').slice(0, max);
+      });
+    });
+
+    // Validar formato de correo
+    const esCorreoValido = (correo) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo);
+
+    // Advertencia al recargar o salir de la página
+    window.addEventListener('beforeunload', (e) => {
+      e.preventDefault();
+      e.returnValue = '';
+      showNotify({
+        type: 'info',
+        titulo: '¡Atención!',
+        descripcion: 'Si recargas la página se perderán los datos ingresados.',
+        tiempo: 5000,
+        icono: '⚠️'
+      });
+    });
+   // Abrir modal candidatos
     document.getElementById('openCandidateModalBtn').addEventListener('click', () => {
   
     });
@@ -533,6 +385,154 @@
       candidateForm.classList.add('hidden');
     }
 
+
+    // Cerrar modal
+    closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.classList.remove('active');
+    });
+
+    // Envío y validación formulario candidatos
+    candidateForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const data = {
+        candidate_name: document.getElementById('candidate_name').value.trim(),
+        candidate_identity: document.getElementById('candidate_identity').value.trim(),
+        phone_number: document.getElementById('phone_number_c').value.trim(),
+        candidate_email: document.getElementById('candidate_email').value.trim(),
+        candidate_language: 'Español' // Valor por defecto
+      };
+
+      if (Object.values(data).some(v => !v)) {
+        return showNotify({ type: 'danger', titulo: 'Campos requeridos', descripcion: 'Todos los campos son obligatorios.', tiempo: 4000, icono: '❌' });
+      }
+
+      if (!/^\d{13}$/.test(data.candidate_identity)) {
+        return showNotify({ type: 'danger', titulo: 'Identidad inválida', descripcion: 'Debe tener exactamente 13 dígitos numéricos.', tiempo: 4000, icono: '🪪' });
+      }
+
+      if (!/^\d{8}$/.test(data.phone_number)) {
+        return showNotify({ type: 'danger', titulo: 'Teléfono inválido', descripcion: 'Debe tener exactamente 8 dígitos numéricos.', tiempo: 4000, icono: '📞' });
+      }
+
+      if (!esCorreoValido(data.candidate_email)) {
+        return showNotify({ type: 'danger', titulo: 'Correo inválido', descripcion: 'Formato de correo incorrecto.', tiempo: 4000, icono: '📧' });
+      }
+
+      // Verificar duplicados
+      const { data: existing, error: errorCheck } = await supabase
+              .from('candidates')
+              .select('candidate_id, candidate_email, phone_number, candidate_identity')
+              .or(`candidate_identity.eq.${data.candidate_identity},candidate_email.eq.${data.candidate_email},phone_number.eq.${data.phone_number}`);
+
+      if (errorCheck) {
+        return showNotify({ type: 'danger', titulo: 'Error de permisos', descripcion: 'No se pudo validar duplicados. Contacta al administrador.', tiempo: 5000, icono: '🔒' });
+      }
+
+      if (existing && existing.length > 0) {
+        let camposDuplicados = [];
+
+        existing.forEach(item => {
+          if (item.candidate_identity === data.candidate_identity) camposDuplicados.push('identidad');
+          if (item.candidate_email === data.candidate_email) camposDuplicados.push('correo');
+          if (item.phone_number === data.phone_number) camposDuplicados.push('teléfono');
+        });
+
+        camposDuplicados = [...new Set(camposDuplicados)];
+
+        return showNotify({
+          type: 'danger',
+          titulo: 'Duplicado',
+          descripcion: `Ya existe un candidato con el/los siguiente(s) dato(s): ${camposDuplicados.join(', ')}.`,
+          tiempo: 6000,
+          icono: '🚫'
+        });
+      }
+
+      const { error } = await supabase.from('candidates').insert([data]);
+
+      if (error) {
+        showNotify({ type: 'danger', titulo: 'Error', descripcion: error.message, tiempo: 4000, icono: '❌' });
+      } else {
+        showNotify({ type: 'success', titulo: 'Éxito', descripcion: 'Candidato registrado correctamente.', tiempo: 4000, icono: '✅' });
+        modal.classList.remove('active');
+        candidateForm.reset();
+      }
+    });
+
+    // Envío y validación formulario empresas
+    businessForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const data = {
+        name_company: document.getElementById('name_company').value.trim(),
+        rtn_company: '00000000000000', // Valor por defecto
+        company_industry: document.getElementById('company_industry').value.trim(),
+        company_owner: document.getElementById('company_owner').value.trim(),
+        phone_number: document.getElementById('phone_number_b').value.trim(),
+        email_company: document.getElementById('email_company').value.trim()
+      };
+
+      if (Object.values(data).some(v => !v)) {
+        return showNotify({ type: 'danger', titulo: 'Campos requeridos', descripcion: 'Todos los campos son obligatorios.', tiempo: 4000, icono: '❌' });
+      }
+
+
+
+      if (!/^\d{8}$/.test(data.phone_number)) {
+        return showNotify({ type: 'danger', titulo: 'Teléfono inválido', descripcion: 'Debe tener exactamente 8 dígitos numéricos.', tiempo: 4000, icono: '📞' });
+      }
+
+      if (!esCorreoValido(data.email_company)) {
+        return showNotify({ type: 'danger', titulo: 'Correo inválido', descripcion: 'Formato de correo incorrecto.', tiempo: 4000, icono: '📧' });
+      }
+
+      // Verificar duplicados
+      const { data: existing, error: errorCheck } = await supabase
+              .from('business')
+              .select('company_id, email_company, phone_number')
+              .or(`email_company.eq.${data.email_company},phone_number.eq.${data.phone_number}`);
+
+      if (errorCheck) {
+        return showNotify({ type: 'danger', titulo: 'Error de permisos', descripcion: 'No se pudo validar duplicados. Contacta al administrador.', tiempo: 5000, icono: '🔒' });
+      }
+
+      if (existing && existing.length > 0) {
+        let camposDuplicados = [];
+
+        existing.forEach(item => {
+          if (item.email_company === data.email_company) camposDuplicados.push('correo');
+          if (item.phone_number === data.phone_number) camposDuplicados.push('teléfono');
+        });
+
+        camposDuplicados = [...new Set(camposDuplicados)];
+
+        return showNotify({
+          type: 'danger',
+          titulo: 'Duplicado',
+          descripcion: `Ya existe una empresa con el/los siguiente(s) dato(s): ${camposDuplicados.join(', ')}.`,
+          tiempo: 6000,
+          icono: '🚫'
+        });
+      }
+
+      const { error } = await supabase.from('business').insert([data]);
+
+      if (error) {
+        showNotify({ type: 'danger', titulo: 'Error', descripcion: error.message, tiempo: 4000, icono: '❌' });
+      } else {
+        showNotify({ type: 'success', titulo: 'Éxito', descripcion: 'Empresa registrada correctamente.', tiempo: 4000, icono: '✅' });
+        modal.classList.remove('active');
+        businessForm.reset();
+      }
+    });
+
+  });
+</script>
+
+<script>
+   
   (function() {
     if (window.self !== window.top) {
       const badgeContainer = document.getElementById('devv-badge-container');
